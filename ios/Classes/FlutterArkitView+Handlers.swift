@@ -221,4 +221,23 @@ extension FlutterArkitView {
         }
         sceneView?.scene.rootNode.removeAnimation(forKey: key)
     }
+
+    func onCameraEulerAngles(_ result:FlutterResult){
+        if let frame = sceneView.session.currentFrame {
+            let res = serializeArray(frame.camera.eulerAngles)
+            result(res)
+        } else {
+            result(nil)
+        }
+   }
+
+   func onGetSnapshot(_ result:FlutterResult) {
+        let snapshotImage = sceneView.snapshot()
+        if let bytes = snapshotImage.pngData() {
+            let data = FlutterStandardTypedData(bytes:bytes)
+            result(data)
+        } else {
+            result(nil)
+        }
+    }
 }

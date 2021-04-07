@@ -105,6 +105,12 @@ class FlutterArkitView: NSObject, FlutterPlatformView {
             onDispose(result)
             result(nil)
             break
+        case "cameraEulerAngles":
+            onCameraEulerAngles(result)
+            break
+        case "snapshot":
+            onGetSnapshot(result)
+            break
         default:
             result(FlutterMethodNotImplemented)
             break
@@ -112,8 +118,8 @@ class FlutterArkitView: NSObject, FlutterPlatformView {
     }
     
     func onDispose(_ result:FlutterResult) {
-        self.sceneView?.session.pause()
-        self.sceneView = nil
+        sceneView.session.pause()
+        self.channel.setMethodCallHandler(nil)
         result(nil)
     }
 }
